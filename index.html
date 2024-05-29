@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국사 인물 업적 퀴즈</title>
+    <style>
+        body {
+            background-image: url("tttt.jpg");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+        button {
+            margin-top: 20px;
+        }
+        .quiz-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="start-container">
+            <h1>한국사 인물 업적 퀴즈</h1>
+            <p>아래 버튼을 클릭하여 퀴즈를 시작하세요.</p>
+            <button onclick="startQuiz()">퀴즈 시작</button>
+        </div>
+
+        <div class="quiz-container">
+            <h2 id="question"></h2>
+            <form id="options">
+                <!-- Options will be populated dynamically using JavaScript -->
+            </form>
+            <button onclick="submitAnswer()">정답 제출</button>
+        </div>
+    </div>
+
+    <script>
+        var questions = [
+            {
+                question: "조선 후기 학자 이황의 업적은 무엇인가요?",
+                options: ["훈민정음 창제", "거북선 전투 승리", "갑신정변 참전", "한글 창제", "과학 기술 발전"],
+                answer: "훈민정음 창제"
+            },
+            {
+                question: "한성 임시 정부를 이끈 인물은 누구인가요?",
+                options: ["안중근", "유관순", "김구", "황국정음", "유관순"],
+                answer: "김구"
+            },
+            {
+                question: "장영실의 업적은 무엇인가요?",
+                options: ["천문학 연구", "농업 기술 개발", "수도원 건립", "무궁화 개발", "전쟁 승리"],
+                answer: "천문학 연구"
+            },
+            {
+                question: "세종대왕이 편찬한 한글이란?",
+                options: ["한자", "훈민정음", "민화", "한글", "유발원리"],
+                answer: "훈민정음"
+            },
+            {
+                question: "안중근은 무엇에 관련된 업적을 남겼나요?",
+                options: ["독립 운동", "미술", "과학", "친일파", "군사"],
+                answer: "독립 운동"
+            },
+            {
+                question: "백제를 건국한 왕은?",
+                options: ["온조왕", "소수림왕", "청년왕", "상하", "율령"],
+                answer: "온조왕"
+            },
+            {
+                question: "한반도 최초의 나라는?",
+                options: ["백제", "고조선", "신라", "구국", "마한"],
+                answer: "고조선"
+            },
+            {
+                question: "조선의 건국자는?",
+                options: ["이성계", "고려", "이완구", "서주", "흥덕왕"],
+                answer: "이성계"
+            },
+            {
+                question: "한산도대첩 이끈 장수는?",
+                options: ["이순신", "권율", "원균", "김윤정", "안중근"],
+                answer: "이순신"
+            },
+            {
+                question: "갑신정변을 일으킨 인물은?",
+                options: ["신사임당", "안중근", "홍범도", "강철중", "강희선"],
+                answer: "홍범도"
+            }
+        ];
+
+        var currentQuestionIndex = 0;
+        var totalQuestions = questions.length;
+        var score = 0;
+
+        function startQuiz() {
+            document.querySelector('.start-container').style.display = 'none';
+            displayQuestion();
+            document.querySelector('.quiz-container').style.display = 'block';
+        }
+
+        function displayQuestion() {
+            var currentQuestion = questions[currentQuestionIndex];
+            document.getElementById('question').innerText = currentQuestion.question;
+            var optionsForm = document.getElementById('options');
+            optionsForm.innerHTML = '';
+            currentQuestion.options.forEach(function(option) {
+                var radioBtn = document.createElement('input');
+                radioBtn.setAttribute('type', 'radio');
+                radioBtn.setAttribute('name', 'answer');
+                radioBtn.setAttribute('value', option);
+                optionsForm.appendChild(radioBtn);
+                var label = document.createElement('label');
+                label.innerHTML = option;
+                optionsForm.appendChild(label);
+                optionsForm.appendChild(document.createElement('br'));
+            });
+        }
+
+        function submitAnswer() {
+            var selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+            var currentQuestion = questions[currentQuestionIndex];
+            if (selectedAnswer === currentQuestion.answer) {
+                score++;
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < totalQuestions) {
+                displayQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.querySelector('.quiz-container').innerHTML = `<h2>퀴즈 완료!</h2><p>당신의 점수는 ${score} / ${totalQuestions} 입니다.</p>`;
+        }
+    </script>
+</body>
+</html>
